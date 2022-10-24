@@ -276,7 +276,7 @@ open class GeocoreObjectBinaryOperation: GeocoreObjectOperation {
     open func binaries() -> Promise<[String]> {
         if let path = buildPath(forService: "/objs", withSubPath: "/bins") {
             let generics: Promise<[GeocoreGenericResult]> = Geocore.sharedInstance.promisedGET(path, parameters: nil)
-            return generics.then { (generics) -> [String] in
+            return generics.map { (generics) -> [String] in
                 var bins = [String]()
                 for generic in generics {
                     bins.append(generic.json.string!)
@@ -310,7 +310,7 @@ open class GeocoreObjectBinaryOperation: GeocoreObjectOperation {
                     finalUrl = "http\(url[url.index(url.startIndex, offsetBy: 5)...])"
                 }
                 //print("url -> \(finalUrl)")
-                return Promise(value: finalUrl)
+                return .value(finalUrl)
                 //return Promise(value: url)
             } else {
                 return Promise { resolver in resolver.reject(GeocoreError.unexpectedResponse(message: "url is nil")) }
@@ -321,7 +321,7 @@ open class GeocoreObjectBinaryOperation: GeocoreObjectOperation {
     open func url<T>(_ transform: @escaping (String?, String) -> T) -> Promise<T> {
         return Promise { resolver in
             self.url()
-                .then { url in
+                .done { url in
                     resolver.fulfill(transform(self.id, url))
                 }
                 .catch { error in
@@ -334,7 +334,7 @@ open class GeocoreObjectBinaryOperation: GeocoreObjectOperation {
     open func url<T>(_ transform: @escaping (String?, String?, String) -> T) -> Promise<T> {
         return Promise { resolver in
             self.url()
-                .then { url in
+                .done { url in
                     resolver.fulfill(transform(self.id, self.key, url))
                 }
                 .catch { error in
@@ -348,7 +348,7 @@ open class GeocoreObjectBinaryOperation: GeocoreObjectOperation {
     open func image() -> Promise<UIImage> {
         return Promise { resolver in
             self.url()
-                .then { url in
+                .done { url in
                     Alamofire.request(url).responseImage { response in
                         if let image = response.result.value {
                             resolver.fulfill(image)
@@ -368,7 +368,7 @@ open class GeocoreObjectBinaryOperation: GeocoreObjectOperation {
     open func image<T>(_ transform: @escaping (String?, GeocoreBinaryDataInfo, UIImage) -> T) -> Promise<T> {
         return Promise { resolver in
             self.binary()
-                .then { binaryDataInfo -> Void in
+                .done { binaryDataInfo -> Void in
                     //print("binaryDataInfo -> \(binaryDataInfo)")
                     if let url = binaryDataInfo.url {
                         // TODO: should support https!
@@ -510,7 +510,7 @@ open class GeocoreRelationshipBinaryOperation: GeocoreRelationshipOperation {
         if let id1 = self.id1, let id2 = self.id2 {
             let path = "/objs/relationship/\(id1)/\(id2)/bins"
             let generics: Promise<[GeocoreGenericResult]> = Geocore.sharedInstance.promisedGET(path, parameters: nil)
-            return generics.then { generics -> [String] in
+            return generics.map { generics -> [String] in
                 var bins = [String]()
                 for generic in generics {
                     bins.append(generic.json.string!)
@@ -541,7 +541,7 @@ open class GeocoreRelationshipBinaryOperation: GeocoreRelationshipOperation {
                     finalUrl = "http\(url[url.index(url.startIndex, offsetBy: 5)...])"
                 }
                 //print("url -> \(finalUrl)")
-                return Promise(value: finalUrl)
+                return .value(finalUrl)
             } else {
                 return Promise { resolver in resolver.reject(GeocoreError.unexpectedResponse(message: "url is nil")) }
             }
@@ -551,7 +551,7 @@ open class GeocoreRelationshipBinaryOperation: GeocoreRelationshipOperation {
     open func url<T>(_ transform: @escaping (String?, String?, String) -> T) -> Promise<T> {
         return Promise { resolver in
             self.url()
-                .then { url in
+                .done { url in
                     resolver.fulfill(transform(self.id1, self.id2, url))
                 }
                 .catch { error in
@@ -565,7 +565,7 @@ open class GeocoreRelationshipBinaryOperation: GeocoreRelationshipOperation {
     open func image() -> Promise<UIImage> {
         return Promise { resolver in
             self.url()
-                .then { url in
+                .done { url in
                     Alamofire.request(url).responseImage { response in
                         if let image = response.result.value {
                             resolver.fulfill(image)
@@ -585,7 +585,7 @@ open class GeocoreRelationshipBinaryOperation: GeocoreRelationshipOperation {
     open func image<T>(_ transform: @escaping (String?, String?, GeocoreBinaryDataInfo, UIImage) -> T) -> Promise<T> {
         return Promise { resolver in
             self.binary()
-                .then { binaryDataInfo -> Void in
+                .done { binaryDataInfo -> Void in
                     //print("binaryDataInfo -> \(binaryDataInfo)")
                     if let url = binaryDataInfo.url {
                         // TODO: should support https!

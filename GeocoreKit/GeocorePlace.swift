@@ -261,7 +261,7 @@ open class GeocorePlace: GeocoreTaggable {
         } else {
             return query()
                 .events()
-                .then { events -> [GeocoreEvent] in
+                .map { events -> [GeocoreEvent] in
                     self.prefetchedEvents = events
                     return events
                 }
