@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E9DC32D2900F470007A946D /* GeocoreGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9DC32C2900F470007A946D /* GeocoreGroup.swift */; };
+		8E9DC32F2900F47C007A946D /* GeocoreUserGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9DC32E2900F47C007A946D /* GeocoreUserGroup.swift */; };
 		A940C90D1ADDF5E3006B682F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A940C90A1ADDF5E3006B682F /* Alamofire.framework */; };
 		A973C8D21C003FAA0086E8DF /* GeocoreUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A973C8D11C003FAA0086E8DF /* GeocoreUser.swift */; };
 		A973C8D41C003FC20086E8DF /* GeocorePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A973C8D31C003FC20086E8DF /* GeocorePlace.swift */; };
@@ -69,6 +71,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8E9DC32C2900F470007A946D /* GeocoreGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocoreGroup.swift; sourceTree = "<group>"; };
+		8E9DC32E2900F47C007A946D /* GeocoreUserGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocoreUserGroup.swift; sourceTree = "<group>"; };
 		A940C9041ADDF5CB006B682F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		A940C90A1ADDF5E3006B682F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/Mac/Alamofire.framework; sourceTree = "<group>"; };
 		A973C8D11C003FAA0086E8DF /* GeocoreUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeocoreUser.swift; sourceTree = "<group>"; };
@@ -215,6 +219,8 @@
 				A9A1F9C71CA7E8A40085F341 /* GeocoreFeed.swift */,
 				A9A1F9C81CA7E8A40085F341 /* GeocoreItem.swift */,
 				A98C218E1AE8934D0099BC9D /* GeocoreUtil.swift */,
+				8E9DC32C2900F470007A946D /* GeocoreGroup.swift */,
+				8E9DC32E2900F47C007A946D /* GeocoreUserGroup.swift */,
 				A9E680821ADCF45F00FAE624 /* Supporting Files */,
 			);
 			path = GeocoreKit;
@@ -350,6 +356,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = A9E680731ADCF43400FAE624;
@@ -414,7 +421,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A98C218F1AE8934D0099BC9D /* GeocoreUtil.swift in Sources */,
+				8E9DC32F2900F47C007A946D /* GeocoreUserGroup.swift in Sources */,
 				A9A1F9C91CA7E8A40085F341 /* GeocoreEvent.swift in Sources */,
+				8E9DC32D2900F470007A946D /* GeocoreGroup.swift in Sources */,
 				A9A1F9CB1CA7E8A40085F341 /* GeocoreItem.swift in Sources */,
 				A973C8D61C0178490086E8DF /* GeocoreTag.swift in Sources */,
 				A9F157121ADCF87000E6AC34 /* Geocore.swift in Sources */,
