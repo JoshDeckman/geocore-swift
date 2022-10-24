@@ -4,6 +4,9 @@
 
 
 import Foundation
+import Alamofire
+import SwiftyJSON
+import PromiseKit
 
 open class GeocoreGroupQuery: GeocoreTaggableQuery {
     
@@ -24,7 +27,7 @@ open class GeocoreGroupQuery: GeocoreTaggableQuery {
     
     open func all() -> Promise<[GeocoreGroup]> {
         guard let _ = self.parentId else {
-            return Promise { fulfill, reject in reject(GeocoreError.invalidParameter(message: "Expecting parent id")) }
+            return Promise { resolver in resolver.reject(GeocoreError.invalidParameter(message: "Expecting parent id")) }
         }
         return self.all(forService: "/groups")
     }

@@ -8,14 +8,14 @@ import Alamofire
 import SwiftyJSON
 import PromiseKit
 
-open enum GeocoreUserGroupType: String {
+public enum GeocoreUserGroupType: String {
     case creator = "CREATOR"
     case owner = "OWNER"
     case moderator = "MODERATOR"
     case member = "MEMBER"
 }
 
-open enum GeocoreUserGroupApprovalStatus: String {
+public enum GeocoreUserGroupApprovalStatus: String {
     case unknown = "UNKNOWN"
     case pending = "PENDING"
     case approved = "APPROVED"
@@ -29,21 +29,21 @@ open class GeocoreUserGroupQuery: GeocoreTaggableQuery {
     
     open func with(user: GeocoreUser) -> Self {
         self.user = user
-        return self.with(id: user.id)
+        return self.with(id: user.id ?? "")
     }
     
     open func with(group: GeocoreGroup) -> Self {
         self.group = group
-        return self.with(id: group.id)
+        return self.with(id: group.id ?? "")
     }
     
     open func all() -> Promise<[GeocoreUserGroup]> {
         if self.user != nil {
-            return Geocore.sharedInstance.promisedGET(super.buildPath(forService: "/users", withSubPath: "/groups"))
+            return Geocore.sharedInstance.promisedGET(super.buildPath(forService: "/users", withSubPath: "/groups") ?? "")
         } else if self.group != nil {
-            return Geocore.sharedInstance.promisedGET(super.buildPath(forService: "/groups", withSubPath: "/users"))
+            return Geocore.sharedInstance.promisedGET(super.buildPath(forService: "/groups", withSubPath: "/users") ?? "")
         }
-        return Promise { fulfill, reject in reject(GeocoreError.invalidParameter(message: "Expecting id")) }
+        return Promise { resolver in resolver.reject(GeocoreError.invalidParameter(message: "Expecting id")) }
     }
 }
 
@@ -59,7 +59,7 @@ open class GeocoreUserGroup: GeocoreTaggable {
     }
     
     public required init(_ json: JSON) {
-        if let pk = json["pk"] {
+        if let pk = json["pk"].dictionary {
             if let user = pk["user"] {
                 self.user = GeocoreUser.init(user)
             }
@@ -67,10 +67,10 @@ open class GeocoreUserGroup: GeocoreTaggable {
                 self.group = GeocoreGroup.init(group)
             }
         }
-        if let type = json["type"] {
+        if let type = json["type"].string {
             self.type = GeocoreUserGroupType(rawValue: "\(type)")
         }
-        if let approvalStatus = json["approvalStatus"] {
+        if let approvalStatus = json["approvalStatus"].string {
             self.approvalStatus = GeocoreUserGroupApprovalStatus(rawValue: "\(approvalStatus)")
         }
         super.init(json)
