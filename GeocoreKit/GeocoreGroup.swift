@@ -42,7 +42,7 @@ open class GeocoreGroup: GeocoreTaggable {
     }
     
     public required init(_ json: JSON) {
-        if let enabled = json["enabled"] as? Bool {
+        if let enabled = json["enabled"].bool {
             self.enabled = enabled
         }
         super.init(json)
