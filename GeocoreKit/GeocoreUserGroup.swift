@@ -47,6 +47,81 @@ open class GeocoreUserGroupQuery: GeocoreTaggableQuery {
     }
 }
 
+open class GeocoreUserGroupOperation: GeocoreTaggableOperation {
+    fileprivate var group: GeocoreGroup?
+    fileprivate var userIdsToAdd: [String] = []
+    fileprivate var userIdsToDelete: [String] = []
+    fileprivate var customMessage: String? = nil
+    
+    open func with(group: GeocoreGroup) -> Self {
+        self.group = group
+        guard let id = group.id else {
+            return self
+        }
+        return self.with(id: id)
+    }
+    
+    open func with(customMessge: String) -> Self {
+        self.customMessage = customMessge
+        return self
+    }
+    
+    open func add(userId: String) -> Self {
+        self.userIdsToAdd.append(userId)
+        return self
+    }
+    
+    open func add(userIds: [String]) -> Self {
+        userIds.forEach { userId in
+            self.userIdsToAdd.append(userId)
+        }
+        return self
+    }
+    
+    open func delete(userId: String) -> Self {
+        userIdsToDelete.append(userId)
+        return self
+    }
+    
+    open func delete(userIds: [String]) -> Self {
+        userIds.forEach { userId in
+            self.userIdsToDelete.append(userId)
+        }
+        return self
+    }
+    
+    open override func buildQueryParameters() -> Alamofire.Parameters {
+        var dict = super.buildQueryParameters()
+        if let customMessage = self.customMessage {
+            dict["cust_msg"] = customMessage
+        }
+        if self.userIdsToAdd.count > 0 {
+            dict["user_ids"] = self.userIdsToAdd.joined(separator: ",")
+        }
+        if self.userIdsToDelete.count > 0 {
+            dict["del_user_ids"] = self.userIdsToDelete.joined(separator: ",")
+        }
+        return dict
+    }
+    
+    open func manage() -> Promise<[GeocoreUserGroup]> {
+        let params = buildQueryParameters()
+        guard let group = self.group else {
+            return Promise { resolver in resolver.reject(GeocoreError.invalidParameter(message: "Expecting group")) }
+        }
+        if params.count > 0 {
+            return Geocore.sharedInstance.promisedPOST(
+                super.buildPath(forService: "/groups", withSubPath: "/users") ?? "",
+                parameters: params,
+                body: group.asDictionary())
+        } else {
+            return Geocore.sharedInstance.promisedPOST(
+                super.buildPath(forService: "/groups", withSubPath: "/users") ?? "",
+                parameters: group.asDictionary())
+        }
+    }
+}
+
 open class GeocoreUserGroup: GeocoreTaggable {
     
     fileprivate(set) open var user: GeocoreUser?
