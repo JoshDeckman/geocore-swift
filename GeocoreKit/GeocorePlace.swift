@@ -44,7 +44,30 @@ open class GeocorePlacesSmallestBound: GeocoreInitializableFromJSON {
 }
 
 open class GeocorePlaceOperation: GeocoreTaggableOperation {
+    fileprivate var place: GeocorePlace?
     
+    open func with(place: GeocorePlace) -> Self {
+        self.place = place
+        return self
+    }
+    
+    open func save() -> Promise<GeocorePlace> {
+        guard let place = self.place else {
+            return Promise { resolver in resolver.reject(GeocoreError.invalidParameter(message: "Expecting place")) }
+        }
+        if place.id == nil {
+            place.id = place.generateId(prefix: "PLA")
+        }
+        
+        return self.save(place, forService: "/places")
+    }
+    
+    open func delete() -> Promise<GeocorePlace> {
+        guard let place = self.place else {
+            return Promise { resolver in resolver.reject(GeocoreError.invalidParameter(message: "Expecting place")) }
+        }
+        return self.delete(place, forService: "places")
+    }
 }
 
 open class GeocorePlaceQuery: GeocoreTaggableQuery {

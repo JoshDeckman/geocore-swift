@@ -718,6 +718,22 @@ open class GeocoreObject: GeocoreIdentifiable {
         }
     }
     
+    open func generateId(prefix: String) -> String {
+        let projectId = Geocore.sharedInstance.projectId
+        let userId = Geocore.sharedInstance.userId
+        var suffix = ""
+        guard
+            let projectId,
+            let userId else {
+            return ""
+        }
+        
+        if projectId.hasPrefix("PRO-") {
+            suffix = projectId.dropFirst(4).description
+        }
+        return "\(prefix)-\(suffix)-\(userId)-\(Int(Date().timeIntervalSince1970))"
+    }
+    
     open class func get(_ id: String) -> Promise<GeocoreObject> {
         return GeocoreObjectQuery().with(id: id).get();
     }
