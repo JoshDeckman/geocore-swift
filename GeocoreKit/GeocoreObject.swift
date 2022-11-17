@@ -438,6 +438,9 @@ open class GeocoreRelationshipOperation {
     private(set) open var id2: String?
     private(set) open var customData: [String: String?]?
     
+    public init() {
+    }
+    
     open func with(object1Id: String) -> Self {
         self.id1 = object1Id
         return self
