@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E006CD12925FCB000E804AF /* GeocoreGroupTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E006CD02925FCB000E804AF /* GeocoreGroupTag.swift */; };
 		8E9DC32D2900F470007A946D /* GeocoreGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9DC32C2900F470007A946D /* GeocoreGroup.swift */; };
 		8E9DC32F2900F47C007A946D /* GeocoreUserGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9DC32E2900F47C007A946D /* GeocoreUserGroup.swift */; };
 		A940C90D1ADDF5E3006B682F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A940C90A1ADDF5E3006B682F /* Alamofire.framework */; };
@@ -71,6 +72,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8E006CD02925FCB000E804AF /* GeocoreGroupTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocoreGroupTag.swift; sourceTree = "<group>"; };
 		8E9DC32C2900F470007A946D /* GeocoreGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocoreGroup.swift; sourceTree = "<group>"; };
 		8E9DC32E2900F47C007A946D /* GeocoreUserGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocoreUserGroup.swift; sourceTree = "<group>"; };
 		A940C9041ADDF5CB006B682F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				A98C218E1AE8934D0099BC9D /* GeocoreUtil.swift */,
 				8E9DC32C2900F470007A946D /* GeocoreGroup.swift */,
 				8E9DC32E2900F47C007A946D /* GeocoreUserGroup.swift */,
+				8E006CD02925FCB000E804AF /* GeocoreGroupTag.swift */,
 				A9E680821ADCF45F00FAE624 /* Supporting Files */,
 			);
 			path = GeocoreKit;
@@ -421,6 +424,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A98C218F1AE8934D0099BC9D /* GeocoreUtil.swift in Sources */,
+				8E006CD12925FCB000E804AF /* GeocoreGroupTag.swift in Sources */,
 				8E9DC32F2900F47C007A946D /* GeocoreUserGroup.swift in Sources */,
 				A9A1F9C91CA7E8A40085F341 /* GeocoreEvent.swift in Sources */,
 				8E9DC32D2900F470007A946D /* GeocoreGroup.swift in Sources */,
