@@ -116,6 +116,26 @@ open class GeocoreTaggableQuery: GeocoreObjectQuery {
         return self
     }
     
+    open func tag(_ tagIdsOrNames: [String]) -> Self {
+        for tagIdOrName in tagIdsOrNames {
+            // for now, assume that if the tag starts with 'TAG-', it's a tag id, otherwise it's a name
+            if tagIdOrName.hasPrefix("TAG-") {
+                if self.tagIds == nil {
+                    self.tagIds = [tagIdOrName]
+                } else {
+                    self.tagIds?.append(tagIdOrName)
+                }
+            } else {
+                if self.tagNames == nil {
+                    self.tagNames = [tagIdOrName]
+                } else {
+                    self.tagNames?.append(tagIdOrName)
+                }
+            }
+        }
+        return self
+    }
+    
     /**
      Set tag names to be submitted as request parameter.
      
