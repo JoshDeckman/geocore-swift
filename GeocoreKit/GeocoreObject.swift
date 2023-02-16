@@ -111,6 +111,7 @@ open class GeocoreObjectQuery: GeocoreObjectOperation {
     private(set) open var unlimitedRecords: Bool
     private(set) open var name: String?
     private(set) open var fromDate: Date?
+    private(set) open var toDate: Date?
     private(set) open var page: Int?
     private(set) open var numberPerPage: Int?
     private(set) open var recentlyCreated: Bool?
@@ -128,6 +129,11 @@ open class GeocoreObjectQuery: GeocoreObjectOperation {
     
     open func updatedAfter(date: Date) -> Self {
         self.fromDate = date
+        return self
+    }
+    
+    open func updateBefore(date: Date) -> Self {
+        self.toDate = date
         return self
     }
     
@@ -170,6 +176,9 @@ open class GeocoreObjectQuery: GeocoreObjectOperation {
         }
         if let fromDate = self.fromDate {
             dict["from_date"] = DateFormatter.dateFormatterForGeocore().string(from: fromDate)
+        }
+        if let toDate = self.toDate {
+            dict["to_date"] = DateFormatter.dateFormatterForGeocore().string(from: toDate)
         }
         if let recentlyCreated = self.recentlyCreated {
             dict["recent_created"] = recentlyCreated
