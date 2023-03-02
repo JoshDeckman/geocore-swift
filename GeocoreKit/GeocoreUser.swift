@@ -98,6 +98,20 @@ open class GeocoreUserOperation: GeocoreTaggableOperation {
         }
     }
     
+    open func logLocation(latitude: Double, longitude: Double, accuracy: Double) -> Promise<GeocoreTrackPoint> {
+        guard let id = self.id else {
+            return Promise { resolver in resolver.reject(GeocoreError.invalidParameter(message: "Expecting id")) }
+        }
+        var params = self.buildQueryParameters()
+        params["lat"] = latitude as AnyObject?
+        params["lon"] = longitude as AnyObject?
+        params["acc"] = accuracy as AnyObject?
+        params["retain"] = false
+        return Geocore.sharedInstance.promisedPOST(
+            "/users/\(id)/locationlogs",
+            parameters: params,
+            body: Parameters.init())
+    }
 }
 
 open class GeocoreUserTagOperation: GeocoreTaggableOperation {
