@@ -4,6 +4,9 @@
 
 
 import Foundation
+import Alamofire
+import SwiftyJSON
+import PromiseKit
 
 open class GeocoreTrackPoint: GeocoreTaggable {
     
@@ -18,16 +21,16 @@ open class GeocoreTrackPoint: GeocoreTaggable {
     }
     
     public required init(_ json: JSON) {
-        if let objectId = json["id"].bool {
+        if let objectId = json["id"].string {
             self.objectId = objectId
         }
-        if let latitude = json["latitude"].string {
+        if let latitude = json["latitude"].double {
             self.latitude = latitude
         }
-        if let longitude = json["longitude"].string {
+        if let longitude = json["longitude"].double {
             self.longitude = longitude
         }
-        if let accuracy = json["accuracy"].string {
+        if let accuracy = json["accuracy"].double {
             self.accuracy = accuracy
         }
         super.init(json)
