@@ -295,9 +295,8 @@ open class GeocoreObjectBinaryOperation: GeocoreObjectOperation {
     
     open func binaries() -> Promise<[String]> {
         if let path = buildPath(forService: "/objs", withSubPath: "/bins") {
-            let params: Alamofire.Parameters? = nil
+            var params = buildQueryParameters()
             if let quality = self.quality {
-                params = buildQueryParameters()
                 params["quality"] = quality.rawValue
             }
             let generics: Promise<[GeocoreGenericResult]> = Geocore.sharedInstance.promisedGET(path, parameters: params)
