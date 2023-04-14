@@ -21,6 +21,11 @@ import Alamofire
     Base class for all operations that can be used to interact with Geocore services
     to fetch and manipulate Geocore objects.
  */
+
+public enum GeocoreObjectBinaryQuality: String {
+    case low = "low"
+}
+
 open class GeocoreObjectOperation {
     
     private(set) open var id: String?
@@ -252,6 +257,7 @@ open class GeocoreObjectBinaryOperation: GeocoreObjectOperation {
     
     private(set) open var key: String?
     private(set) open var mimeType: String = "application/octet-stream"
+    private(set) open var quality: GeocoreObjectBinaryQuality?
     private(set) open var data: Data?
     
     open func with(key: String) -> Self {
@@ -266,6 +272,11 @@ open class GeocoreObjectBinaryOperation: GeocoreObjectOperation {
     
     open func with(data: Data) -> Self {
         self.data = data
+        return self
+    }
+    
+    open func with(quality: GeocoreObjectBinaryQuality) -> Self {
+        self.quality = quality
         return self
     }
     
@@ -284,7 +295,12 @@ open class GeocoreObjectBinaryOperation: GeocoreObjectOperation {
     
     open func binaries() -> Promise<[String]> {
         if let path = buildPath(forService: "/objs", withSubPath: "/bins") {
-            let generics: Promise<[GeocoreGenericResult]> = Geocore.sharedInstance.promisedGET(path, parameters: nil)
+            let params: Alamofire.Parameters? = nil
+            if let quality = self.quality {
+                params = buildQueryParameters()
+                params["quality"] = quality.rawValue
+            }
+            let generics: Promise<[GeocoreGenericResult]> = Geocore.sharedInstance.promisedGET(path, parameters: params)
             return generics.map { (generics) -> [String] in
                 var bins = [String]()
                 for generic in generics {
