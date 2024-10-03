@@ -66,7 +66,7 @@ open class GeocorePlaceOperation: GeocoreTaggableOperation {
         guard let place = self.place else {
             return Promise { resolver in resolver.reject(GeocoreError.invalidParameter(message: "Expecting place")) }
         }
-        return self.delete(place, forService: "places")
+        return self.delete(place, forService: "/places")
     }
 }
 
